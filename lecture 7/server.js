@@ -28,7 +28,8 @@ const server=http.createServer((req,res)=>{
         res.write(JSON.stringify(users));
         res.end();
     }else if(req.url=="/users" && req.method=="POST"){
-        let body="";
+        try{
+            let body="";
         req.on("data", (chunk) => {
             body+=chunk;
         });
@@ -39,6 +40,15 @@ const server=http.createServer((req,res)=>{
             res.write(JSON.stringify({"success":true, "message":"User Created Successfully", "user":user}));
             res.end();
         });
+        }catch(err){
+            console.log(err);
+             res.writeHead(201, {"Content-Type": "application/json"});
+            res.write({
+                success:false,
+                message:err.message
+            });
+            res.end();   
+        }
     }
     else{
         res.writeHead(404, {"Content-Type": "text/html"});
