@@ -2,7 +2,7 @@ const express = require('express');
 const app = express();
 const PORT = 3000;
 
-app.get('/', (req, res) => {
+app.get ('/', (req, res) => {
     try {
         throw new Error('Something went wrong');
     } catch (error) {
